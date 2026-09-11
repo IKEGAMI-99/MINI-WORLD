@@ -1,4 +1,4 @@
-const CACHE='mini-world-v1.1.0';
+const CACHE='mini-world-v1.2.0';
 const ASSETS=['./','./index.html','./styles.css','./app.js','./enhancements.js','./manifest.webmanifest','./icon.svg'];
 
 self.addEventListener('install',event=>{
@@ -12,10 +12,10 @@ self.addEventListener('activate',event=>{
 self.addEventListener('fetch',event=>{
   if(event.request.method!=='GET')return;
   event.respondWith(
-    caches.match(event.request).then(cached=>cached||fetch(event.request).then(response=>{
+    fetch(event.request).then(response=>{
       const copy=response.clone();
       caches.open(CACHE).then(cache=>cache.put(event.request,copy));
       return response;
-    }).catch(()=>caches.match('./index.html')))
+    }).catch(()=>caches.match(event.request).then(cached=>cached||caches.match('./index.html')))
   );
 });
