@@ -1,0 +1,51 @@
+name: Deploy MINI WORLD to GitHub Pages
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Check JavaScript syntax
+        run: node --check app.js
+      - name: Check required PWA files
+        run: |
+          test -f index.html
+          test -f styles.css
+          test -f app.js
+          test -f manifest.webmanifest
+          test -f sw.js
+          test -f icon.svg
+
+  deploy:
+    needs: validate
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Setup Pages
+        uses: actions/configure-pages@v6
+      - name: Upload site
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: '.'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
