@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+  <meta name="theme-color" content="#79c9ff">
+  <meta name="description" content="探索して、集めて、育てる。完全オフライン対応の小さな世界育成ゲーム。">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="MINI WORLD">
+  <title>MINI WORLD</title>
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="./icon.svg">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div id="app" class="app stage-0">
+    <header class="topbar">
+      <div>
+        <div class="brand">MINI WORLD</div>
+        <div id="subtitle" class="subtitle">なにもない小さな星</div>
+      </div>
+      <div class="top-actions">
+        <button id="installBtn" class="icon-btn hidden" aria-label="インストール">＋</button>
+        <button id="soundBtn" class="icon-btn" aria-label="サウンド切替">♪</button>
+        <button id="menuBtn" class="icon-btn" aria-label="メニュー">⋯</button>
+      </div>
+    </header>
+
+    <main class="game-shell">
+      <section class="resource-strip" aria-label="資源">
+        <div class="resource"><span>🌲</span><b id="wood">0</b><small>木</small></div>
+        <div class="resource"><span>🪨</span><b id="stone">0</b><small>石</small></div>
+        <div class="resource"><span>🍎</span><b id="food">0</b><small>食料</small></div>
+        <div class="resource"><span>👤</span><b id="population">1</b><small>人口</small></div>
+        <div class="resource"><span>✦</span><b id="knowledge">0</b><small>知識</small></div>
+      </section>
+
+      <section class="world-card">
+        <div class="sky-deco cloud c1"></div>
+        <div class="sky-deco cloud c2"></div>
+        <div class="sky-deco spark s1">✦</div>
+        <div class="sky-deco spark s2">·</div>
+
+        <div id="world" class="world" role="img" aria-label="成長する小さな世界">
+          <div class="planet-shadow"></div>
+          <div class="planet">
+            <div class="land land-a"></div>
+            <div class="land land-b"></div>
+            <div class="sprout">🌱</div>
+            <div class="village">🏠</div>
+            <div class="town">🏘️</div>
+            <div class="city">🏙️</div>
+            <div class="future">🔷</div>
+          </div>
+          <div id="levelBadge" class="level-badge">Lv.1</div>
+        </div>
+
+        <div class="progress-wrap">
+          <div class="progress-head"><span id="stageName">荒野</span><span id="progressText">0 / 12</span></div>
+          <div class="progress"><i id="progressBar"></i></div>
+        </div>
+      </section>
+
+      <section class="action-zone">
+        <button id="exploreBtn" class="explore-btn">
+          <span class="compass">◈</span>
+          <span><b>探索</b><small id="exploreHint">タップして世界を見つける</small></span>
+        </button>
+        <div id="eventMessage" class="event-message">最初の一歩を踏み出そう。</div>
+      </section>
+
+      <section class="tabs">
+        <button class="tab active" data-tab="build">建築</button>
+        <button class="tab" data-tab="discoveries">図鑑 <span id="bookCount">0/18</span></button>
+        <button class="tab" data-tab="achievements">実績 <span id="achievementCount">0/10</span></button>
+      </section>
+
+      <section id="buildPanel" class="panel tab-panel active">
+        <div id="buildGrid" class="build-grid"></div>
+      </section>
+
+      <section id="discoveriesPanel" class="panel tab-panel">
+        <div id="discoveryGrid" class="discovery-grid"></div>
+      </section>
+
+      <section id="achievementsPanel" class="panel tab-panel">
+        <div id="achievementGrid" class="achievement-grid"></div>
+      </section>
+
+      <section class="log-card">
+        <div class="section-title"><span>イベントログ</span><button id="clearLogBtn" class="text-btn">消去</button></div>
+        <div id="eventLog" class="event-log"></div>
+      </section>
+    </main>
+  </div>
+
+  <div id="choiceModal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <div class="modal-kicker">SPECIAL EVENT</div>
+      <h2 id="choiceTitle">未知の遺跡</h2>
+      <p id="choiceText">奇妙な入口を見つけた。</p>
+      <div id="choiceButtons" class="choice-buttons"></div>
+    </div>
+  </div>
+
+  <div id="menuModal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-card compact">
+      <div class="section-title"><span>MINI WORLD</span><button id="closeMenuBtn" class="icon-btn">×</button></div>
+      <button id="saveBtn" class="menu-row">今すぐ保存 <span>›</span></button>
+      <button id="exportBtn" class="menu-row">セーブデータを書き出す <span>›</span></button>
+      <label class="menu-row file-row">セーブデータを読み込む <input id="importInput" type="file" accept="application/json"><span>›</span></label>
+      <button id="resetBtn" class="menu-row danger">世界をリセット <span>›</span></button>
+      <div class="version">v1.0.0 · OFFLINE PWA</div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+  <script src="./app.js"></script>
+</body>
+</html>
