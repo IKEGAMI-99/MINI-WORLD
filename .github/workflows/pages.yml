@@ -25,6 +25,7 @@ jobs:
           node --check app.js
           node --check enhancements.js
           node --check stability-v13.js
+          node --check progression-v14.js
       - name: Check required PWA files
         run: |
           test -f index.html
@@ -32,6 +33,7 @@ jobs:
           test -f app.js
           test -f enhancements.js
           test -f stability-v13.js
+          test -f progression-v14.js
           test -f manifest.webmanifest
           test -f sw.js
           test -f icon.svg
