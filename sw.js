@@ -1,5 +1,5 @@
-const CACHE='mini-world-v1.3.0';
-const ASSETS=['./','./index.html','./styles.css','./app.js','./enhancements.js','./stability-v13.js','./manifest.webmanifest','./icon.svg'];
+const CACHE='mini-world-v1.4.0';
+const ASSETS=['./','./index.html','./styles.css','./app.js','./enhancements.js','./stability-v13.js','./progression-v14.js','./manifest.webmanifest','./icon.svg'];
 
 self.addEventListener('install',event=>{
   event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(ASSETS)).then(()=>self.skipWaiting()));
